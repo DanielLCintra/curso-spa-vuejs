@@ -1,10 +1,16 @@
 <script>
-	
+  export default {
+    computed: {
+      shouldDisplayNavigation () {
+        return this.$route.name !== 'auth.index'
+      }
+    }
+  }
 </script>
 
 <template>
 	<div>
-		<nav class="navbar navbar-default">
+		<nav class="navbar navbar-default" v-show="shouldDisplayNavigation">
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
