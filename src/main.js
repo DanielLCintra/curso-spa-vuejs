@@ -3,18 +3,12 @@
 import Vue from 'vue'
 import TheContainer from './the-container'
 import router from './router'
-import axios from 'axios'
 
 Vue.config.productionTip = false
 
-var http = axios.create({
-  baseURL: 'http://localhost:1234',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-})
+window.$ = window.jQuery = require('jquery')
 
-Vue.prototype.$http = http
+require('bootstrap-sass')
 
 /* eslint-disable no-new */
 new Vue({

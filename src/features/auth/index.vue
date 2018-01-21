@@ -1,5 +1,6 @@
 <script>
   import localforage from 'localforage'
+  import http from '@/service/http'
 
   export default {
     name: 'Authentication',
@@ -13,10 +14,11 @@
       async login () {
         try {
           const { email, password } = this
-          const response = await this.$http.post('/autenticacao', { email, password })
+          const response = await http.post('/autenticacao', { email, password })
           const { token } = response.data
-          localforage.setItem('token', token)
-          this.$router.push({name: 'index'})
+          localforage.setItem('token', token).then(() => {
+            this.$router.push({name: 'index'})
+          })
         } catch (error) {
           console.log(error)
         }

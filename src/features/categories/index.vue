@@ -1,20 +1,18 @@
 <script>
-  import axios from 'axios'
+  import http from '@/service/http'
+
   export default {
     name: 'Categories',
-    mounted () {
-      const url = 'http://localhost:1234/categoria'
-      axios
-        .get(url)
-        .then(this.successHandler)
-        .catch(this.errorHandler)
+    data () {
+      return {
+        list: []
+      }
     },
-    methods: {
-      successHandler (res) {
-        console.log(res)
-      },
-      errorHandler (error) {
-        console.log(error)
+    async mounted () {
+      const response = await http.get('/categoria')
+
+      if (response != null) {
+        this.list = response.data.categories
       }
     }
   }
@@ -23,5 +21,18 @@
 <template>
 	<div>
 		<h1>Sou componente Categories.index</h1>
+    <div class="row">
+      <div class="col-sm-6 col-md-4" v-for="category in list" :key="category.id">
+        <div class="thumbnail">
+          <div class="caption">
+            <h3>{{category.name}}</h3>
+            <p class="text-right">
+              <a href="#" class="btn btn-default" role="button">Button</a> 
+              <a href="#" class="btn btn-default" role="button">Button</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 </template>
