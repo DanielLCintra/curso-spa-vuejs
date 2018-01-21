@@ -1,5 +1,5 @@
 <script>
-  import axios from 'axios'
+  import localforage from 'localforage'
 
   export default {
     name: 'Authentication',
@@ -10,20 +10,16 @@
       }
     },
     methods: {
-      login () {
-        const { email, password } = this
-        const payload = { email, password }
-        const url = 'http://localhost:1234/autenticacao'
-
-        axios.post(url, payload)
-          .then(this.successHandler)
-          .catch(this.errorHandler)
-      },
-      successHandler (res) {
-        console.log(res.data)
-      },
-      errorHandler (error) {
-        console.log(error)
+      async login () {
+        try {
+          const { email, password } = this
+          const response = await this.$http.post('/autenticacao', { email, password })
+          const { token } = response.data
+          localforage.setItem('token', token)
+          this.$router.push({name: 'index'})
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
   }
