@@ -1,8 +1,9 @@
 import axios from 'axios'
 import localforage from 'localforage'
+import { bus } from '@/plugins/event-bus'
 
 const http = axios.create({
-  baseURL: 'http://localhost:1234'
+  baseURL: process.env.API_URL
 })
 
 const interceptRequest = async (config) => {
@@ -20,7 +21,11 @@ const interceptResponse = (response) => {
 }
 
 const interceptResponseError = (error) => {
-  console.log(error)
+  bus.$emit('display-alert', {
+    type: 'error',
+    message: error.message
+  })
+
   Promise.reject(error)
 }
 
