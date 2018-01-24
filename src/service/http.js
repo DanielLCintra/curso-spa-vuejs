@@ -21,9 +21,15 @@ const interceptResponse = (response) => {
 }
 
 const interceptResponseError = (error) => {
+  let message = error.message
+
+  if (error.response != null) {
+    message = error.response.data.error
+  }
+
   bus.$emit('display-alert', {
     type: 'error',
-    message: error.message
+    message
   })
 
   Promise.reject(error)

@@ -1,4 +1,5 @@
 <script>
+  import findIndex from 'lodash/findIndex'
   import http from '@/service/http'
 
   export default {
@@ -18,6 +19,17 @@
     methods: {
       navigation (route) {
         this.$router.push({name: route})
+      },
+      updateList (obj) {
+        const { category } = obj
+        const index = findIndex(this.list, category)
+
+        if (index > -1) {
+          this.list[index].name = category.name
+          return
+        }
+
+        this.list.unshift(category)
       }
     },
     computed: {
@@ -46,7 +58,7 @@
     </h2>
 
     <transition name="slide-fade">
-      <router-view></router-view>  
+      <router-view @update-category-list="updateList"></router-view>  
     </transition>   
     
     <div class="row">
@@ -55,8 +67,8 @@
           <div class="caption">
             <h3>{{category.name}}</h3>
             <p class="text-right">
-              <a href="#" class="btn btn-default" role="button">Editar</a> 
-              <a href="#" class="btn btn-default" role="button">Excluir</a>
+              <router-link class="btn btn-default btn-xs" :to="{ name: 'categories.form' , params: {id: category.id}}">Editar</router-link>
+              <a href="#" class="btn btn-default btn-xs" @click="remove(category)"  role="button">Excluir</a>
             </p>
           </div>
         </div>
