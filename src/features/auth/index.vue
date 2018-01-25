@@ -4,6 +4,14 @@
 
   export default {
     name: 'Authentication',
+    mounted () {
+      if (window.location.search.indexOf('expired=true') > -1) {
+        this.$bus.$emit('display-alert', {
+          type: 'error',
+          message: 'Token expirado. Favor logar novamente!'
+        })
+      }
+    },
     data () {
       return {
         email: 'cintra.70@gmail.com',

@@ -4,12 +4,14 @@ import Vue from 'vue'
 import TheContainer from './the-container'
 import router from './router'
 import EventBus from '@/plugins/event-bus'
+import Vuelidade from 'vuelidade'
 
 Vue.config.productionTip = false
 
 window.$ = window.jQuery = require('jquery')
 
 Vue.use(EventBus)
+Vue.use(Vuelidade)
 
 require('bootstrap-sass')
 
