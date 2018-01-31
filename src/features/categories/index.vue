@@ -1,22 +1,15 @@
 <script>
   import findIndex from 'lodash/findIndex'
   import http from '@/service/http'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'Categories',
-    data () {
-      return {
-        list: []
-      }
-    },
     async mounted () {
-      const response = await http.get('/categoria')
-
-      if (response != null) {
-        this.list = response.data.categories
-      }
+      this.fetch()
     },
     methods: {
+      ...mapActions('categories', ['fetch']),
       navigation (route) {
         this.$router.push({name: route})
       },
@@ -52,6 +45,7 @@
       }
     },
     computed: {
+      ...mapState('categories', ['list']),
       shouldDisplayNew () {
         return this.$route.name === 'categories.index'
       },

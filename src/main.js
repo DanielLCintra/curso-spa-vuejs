@@ -3,15 +3,16 @@
 import Vue from 'vue'
 import TheContainer from './the-container'
 import router from './router'
+import store from './store'
 import EventBus from '@/plugins/event-bus'
-import Vuelidade from 'vuelidade'
+import Vuelidate from 'vuelidate'
 
 Vue.config.productionTip = false
 
 window.$ = window.jQuery = require('jquery')
 
 Vue.use(EventBus)
-Vue.use(Vuelidade)
+Vue.use(Vuelidate)
 
 require('bootstrap-sass')
 
@@ -19,6 +20,7 @@ require('bootstrap-sass')
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<the-container/>',
   components: { TheContainer }
 })

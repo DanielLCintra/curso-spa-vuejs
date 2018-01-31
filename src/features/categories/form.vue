@@ -1,6 +1,6 @@
 <script>
   import http from '@/service/http'
-  import { required } from 'vuelidade/lib/validators'
+  import { required } from 'vuelidate/lib/validators'
   export default {
     name: 'Form',
     data () {
@@ -60,7 +60,10 @@
         return this.category.id === 0
       },
       isNameInvalid () {
-        return this.$v.category.name.$inavalid
+        return this.$v.category.name.$invalid
+      },
+      isWholeModelValid () {
+        return !this.$v.$invalid
       }
     }
   }
@@ -69,12 +72,12 @@
 <template>
   <div>
     <form @submit.prevent="submit" class="well">
-      <div class="form-group" :class="{ 'has-error': isNameInvalid}">
+      <div class="form-group" :class="{ 'has-error': isNameInvalid }">
       	<label class="control-label">Nome</label>
       	<input type="text" class="form-control" v-model="category.name">
       </div>
       <div class="text-right">
-      	<button class="btn btn-primary btn-xs" type="submit">Salvar</button>
+      	<button :disabled="!isWholeModelValid" class="btn btn-primary btn-xs" type="submit">Salvar</button>
       </div>
     </form>
   </div>
