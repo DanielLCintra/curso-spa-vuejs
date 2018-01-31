@@ -38,12 +38,11 @@
       },
       async submit () {
         if (this.isNameInvalid) {
-          return false
+          return
         }
-
         const verb = this.isNew ? 'post' : 'put'
         const { category } = this
-        const response = await http[verb]('/categoria', category).then()
+        const response = await http[verb]('/categoria', category)
         if (response != null) {
           this.category.id = response.data.category.id
           const category = { ...this.category }

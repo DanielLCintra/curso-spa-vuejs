@@ -1,8 +1,8 @@
 <script>
-  import findIndex from 'lodash/findIndex'
   import http from '@/service/http'
   import { mapState, mapActions } from 'vuex'
-
+  import findIndex from 'lodash/findIndex'
+  
   export default {
     name: 'Categories',
     async mounted () {
@@ -10,19 +10,12 @@
     },
     methods: {
       ...mapActions('categories', ['fetch']),
+      ...mapActions('categories', ['update']),
       navigation (route) {
         this.$router.push({name: route})
       },
       updateList (obj) {
-        const { category } = obj
-        const index = findIndex(this.list, {id: category.id})
-
-        if (index > -1) {
-          this.list[index].name = category.name
-          return false
-        }
-
-        this.list.unshift(category)
+        this.update(obj.category)
       },
       askRemove (category) {
         const msg = `Tem certeza que deseja remover ${category.name}?`
