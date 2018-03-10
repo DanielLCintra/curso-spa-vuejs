@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import EventBus from '@/plugins/event-bus'
 import Vuelidate from 'vuelidate'
+import Gravatar from 'vue-gravatar'
 
 Vue.config.productionTip = false
 
@@ -13,6 +14,8 @@ window.$ = window.jQuery = require('jquery')
 
 Vue.use(EventBus)
 Vue.use(Vuelidate)
+
+Vue.component('v-gravatar', Gravatar)
 
 require('bootstrap-sass')
 

@@ -1,7 +1,5 @@
 <script>
-  import http from '@/service/http'
   import { mapState, mapActions } from 'vuex'
-  import findIndex from 'lodash/findIndex'
   
   export default {
     name: 'Categories',
@@ -9,8 +7,7 @@
       this.fetch()
     },
     methods: {
-      ...mapActions('categories', ['fetch']),
-      ...mapActions('categories', ['update']),
+      ...mapActions('categories', ['fetch', 'update', 'remove']),
       navigation (route) {
         this.$router.push({name: route})
       },
@@ -25,15 +22,11 @@
         }
       },
       async doRemove (id) {
-        const response = await http.delete(`/categoria/${id}`)
-        const { message } = response.data
-        const index = findIndex(this.list, { id })
-        if (index > -1) {
-          this.list.splice(index, 1)
-        }
-        this.$bus.$emit('display-alert', {
-          type: 'success',
-          message
+        this.remove({id}).then((message) => {
+          this.$bus.$emit('display-alert', {
+            type: 'success',
+            message
+          })
         })
       }
     },

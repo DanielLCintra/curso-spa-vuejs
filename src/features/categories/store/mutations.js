@@ -14,7 +14,12 @@ const SET_ONE = (state, obj) => {
   }
 }
 
+const REMOVE_ONE = (state, obj) => {
+  state.list.splice(obj.index, 1)
+}
+
 export default {
   SET_LIST,
-  SET_ONE
+  SET_ONE,
+  REMOVE_ONE
 }

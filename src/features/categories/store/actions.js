@@ -16,7 +16,21 @@ const update = ({ commit, state }, obj) => {
   commit('SET_ONE', payload)
 }
 
+const remove = async ({commit, state}, obj) => {
+  return new Promise(async (resolve) => {
+    const { id } = obj
+    const response = await http.delete(`/categoria/${id}`)
+    const {message} = response.data
+    const index = findIndex(state.list, { id })
+    if (index > -1) {
+      commit('REMOVE_ONE', index)
+    }
+    resolve(message)
+  })
+}
+
 export default {
   fetch,
-  update
+  update,
+  remove
 }

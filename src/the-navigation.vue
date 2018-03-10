@@ -1,14 +1,19 @@
 <script>
-  import localforage from 'localforage'
+	import localforage from 'localforage'
+	import { mapActions,mapGetters } from 'vuex'
+
   export default {
     computed: {
+			...mapGetters(['email']),
       shouldDisplayNavigation () {
         return this.$route.name !== 'auth.index'
       }
     },
     methods: {
+			...mapActions(['removeToken']),
       logout () {
         localforage.removeItem('token').then(() => {
+					this.removeToken()
           this.$router.push({name: 'auth.index'})
         })
       }
@@ -41,6 +46,7 @@
 		      </ul>
 
 		      <ul class="nav navbar-nav navbar-right">
+						<li><v-gravatar :email="email" width="50"/></li>
 		        <li><a href="#" @click.prevent="logout">Sair</a></li>
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
