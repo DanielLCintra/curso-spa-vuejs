@@ -1,24 +1,24 @@
 <script>
-	import localforage from 'localforage'
-	import { mapActions,mapGetters } from 'vuex'
+import localforage from 'localforage'
+import { mapActions, mapGetters } from 'vuex'
 
-  export default {
-    computed: {
-			...mapGetters(['email']),
-      shouldDisplayNavigation () {
-        return this.$route.name !== 'auth.index'
-      }
-    },
-    methods: {
-			...mapActions(['removeToken']),
-      logout () {
-        localforage.removeItem('token').then(() => {
-					this.removeToken()
-          this.$router.push({name: 'auth.index'})
-        })
-      }
+export default {
+  computed: {
+    ...mapGetters(['email']),
+    shouldDisplayNavigation () {
+      return this.$route.name !== 'auth.index'
+    }
+  },
+  methods: {
+    ...mapActions(['removeToken']),
+    logout () {
+      localforage.removeItem('token').then(() => {
+        this.removeToken()
+        this.$router.push({name: 'auth.index'})
+      })
     }
   }
+}
 </script>
 
 <template>
